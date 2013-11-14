@@ -210,7 +210,9 @@ class ZenLdapTask(ObservableMixin):
 
         slapd.unbind()
 
-        resp_time = time.time() - start_time
+        # Set response time unit to TimeTicks (1/100 sec) as we typically will get
+        #  sub-second response time and we do not want that to represent as the integer 0
+        resp_time = (time.time() - start_time) * 100
 
         # get monparsers to sort out what was returned ...
         results = parse(resultseq, {'responsetime':resp_time})

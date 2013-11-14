@@ -1104,4 +1104,29 @@ AVERAGE
 <!-- ('', 'zport', 'dmd', 'Events', 'Status', 'LDAP') -->
 <object id='/zport/dmd/Events/Status/LDAP' module='Products.ZenEvents.EventClass' class='EventClass'>
 </object>
+<!-- ('', 'zport', 'dmd', 'Processes', 'LDAP') -->
+<object id='/zport/dmd/Processes/LDAP' module='Products.ZenModel.OSProcessOrganizer' class='OSProcessOrganizer'>
+<tomanycont id='osProcessClasses'>
+<object id='slapd' module='Products.ZenModel.OSProcessClass' class='OSProcessClass'>
+<property type="string" id="name" mode="w" >
+slapd
+</property>
+<property type="string" id="regex" mode="w" >
+slapd
+</property>
+<property type="boolean" id="ignoreParametersWhenModeling" mode="w" >
+False
+</property>
+<property type="boolean" id="ignoreParameters" mode="w" >
+False
+</property>
+<property type="int" id="sequence" mode="w" >
+0
+</property>
+<tomany id='instances'>
+<link objid='/zport/dmd/Devices/Server/Linux/devices/zen42.class.example.org/os/processes/usr_sbin_slapd 0ab335394f65ee00bdacbcac6606d1c8'/>
+</tomany>
+</object>
+</tomanycont>
+</object>
 </objects>

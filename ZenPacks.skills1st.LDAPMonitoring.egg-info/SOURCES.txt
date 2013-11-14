@@ -29,7 +29,6 @@ ZenPacks/skills1st/LDAPMonitoring/monparsers.py
 ZenPacks/skills1st/LDAPMonitoring/monparsers.pyc
 ZenPacks/skills1st/LDAPMonitoring/zenLdap.py
 ZenPacks/skills1st/LDAPMonitoring/zenexample.py
-ZenPacks/skills1st/LDAPMonitoring/bin/placeholder.txt
 ZenPacks/skills1st/LDAPMonitoring/browser/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/browser/__init__.pyc
 ZenPacks/skills1st/LDAPMonitoring/browser/configure.zcml
@@ -39,11 +38,9 @@ ZenPacks/skills1st/LDAPMonitoring/browser/resources/js/ExampleDevice.js
 ZenPacks/skills1st/LDAPMonitoring/daemons/zenLdap
 ZenPacks/skills1st/LDAPMonitoring/daemons/zenexample
 ZenPacks/skills1st/LDAPMonitoring/datasources/LdapDataSource.py
-ZenPacks/skills1st/LDAPMonitoring/datasources/LdapDataSource.py_20131016
 ZenPacks/skills1st/LDAPMonitoring/datasources/LdapDataSource.pyc
 ZenPacks/skills1st/LDAPMonitoring/datasources/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/datasources/__init__.pyc
-ZenPacks/skills1st/LDAPMonitoring/lib/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/libexec/placeholder.txt
 ZenPacks/skills1st/LDAPMonitoring/migrate/ExampleMigration.py
 ZenPacks/skills1st/LDAPMonitoring/migrate/ExampleMigration.pyc
@@ -62,7 +59,6 @@ ZenPacks/skills1st/LDAPMonitoring/reports/plugins/example_plugin.py
 ZenPacks/skills1st/LDAPMonitoring/services/ExampleConfigService.py
 ZenPacks/skills1st/LDAPMonitoring/services/LdapConfigService.py
 ZenPacks/skills1st/LDAPMonitoring/services/LdapConfigService.py_20131014
-ZenPacks/skills1st/LDAPMonitoring/services/LdapConfigService.py_20131016
 ZenPacks/skills1st/LDAPMonitoring/services/LdapConfigService.pyc
 ZenPacks/skills1st/LDAPMonitoring/services/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/services/__init__.pyc
