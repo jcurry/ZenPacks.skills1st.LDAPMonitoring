@@ -1028,7 +1028,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-secs
+TimeTicks (1/100 sec)
 </property>
 <property type="boolean" id="log" mode="w" >
 False
