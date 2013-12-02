@@ -5,7 +5,9 @@
 
 
     <!-- Includes: Browser Configuration -->
+    <!--
     <include package=".browser"/>
+    -->
 
 
     <!-- Info Adapters: DataSources

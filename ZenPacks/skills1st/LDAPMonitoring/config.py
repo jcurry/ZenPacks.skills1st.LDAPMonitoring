@@ -49,6 +49,7 @@ MONITORABLE =  (
                ('strongauthbinds', 'DERIVE'),
                ('unauthbinds', 'DERIVE'),
                ('wholetreesearchops', 'DERIVE'),
+               ('responsetime', 'GAUGE'),
                 )
 ERRORDP = (
            ('bindsecurityerrors', 'Bind Security'),

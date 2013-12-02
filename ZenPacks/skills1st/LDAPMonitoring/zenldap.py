@@ -1,7 +1,10 @@
 # This is an example of a custom collector daemon.
 
+COLLECTOR_NAME = "zenldap"
+
 import logging
-log = logging.getLogger('zen.Ldap')
+log = logging.getLogger("zen.%s" % COLLECTOR_NAME)
+
 import ldap, time
 
 
@@ -45,7 +48,7 @@ class ZenLdapPreferences(object):
     zope.interface.implements(ICollectorPreferences)
 
     def __init__(self):
-        self.collectorName = 'zenLdap'
+        self.collectorName = 'zenldap'
         self.configurationService = \
             "ZenPacks.skills1st.LDAPMonitoring.services.LdapConfigService"
 
@@ -83,7 +86,7 @@ class ZenLdapTask(ObservableMixin):
         self._eventService = zope.component.queryUtility(IEventService)
         self._dataService = zope.component.queryUtility(IDataService)
         self._preferences = zope.component.queryUtility(
-            ICollectorPreferences, 'zenLdap')
+            ICollectorPreferences, 'zenldap')
 
         # All of these properties are required to implement the IScheduledTask
         # interface.

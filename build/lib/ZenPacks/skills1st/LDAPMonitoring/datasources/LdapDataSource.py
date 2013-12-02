@@ -32,7 +32,8 @@ class LdapDataSource(ZenPackPersistence, RRDDataSource):
 
     # Add default values for custom properties of this datasource.
     hostname = '${dev/ip}'
-    ipAddress = '${dev/manageIp}'
+    #ipAddress = '${dev/manageIp}'
+    ipAddress = '${dev/id}'
 
     ldapProto = '${dev/zLDAPProto}'
     ldapPort = '${dev/zLDAPPort}'
@@ -45,7 +46,7 @@ class LdapDataSource(ZenPackPersistence, RRDDataSource):
 
     _properties = RRDDataSource._properties + (
         {'id':'ldapProto',    'type':'string',    'mode':'w'},
-        {'id':'ldapPort',     'type':'int',       'mode':'w'},
+        {'id':'ldapPort',     'type':'string',       'mode':'w'},
         {'id':'ldapDN',       'type':'string',    'mode':'w'},
         {'id':'ldapPW',       'type':'string',    'mode':'w'},
         {'id':'timeout',      'type':'int',       'mode':'w'},
@@ -84,9 +85,6 @@ class LdapDataSource(ZenPackPersistence, RRDDataSource):
                     dp.rrdmin = 0
             except:
                 pass
-        dp = self.manage_addRRDDataPoint('responsetime')
-        dp.rrdtype = 'GAUGE'
-
 
 
 

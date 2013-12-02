@@ -18,7 +18,7 @@
 #
 from config import MONITORED
 import logging
-log = logging.getLogger('zen.Ldap')
+log = logging.getLogger('zen.zenldap')
 
 
 KEYS = map(lambda x:x[0], MONITORED)
@@ -62,12 +62,12 @@ def parse(ldapresults, results):
     datapoint names
     """
     base = _dn('cn=monitor', ldapresults)
-    log.info('In parse - base is %s \n' % (base))
+    log.debug('In parse - base is %s \n' % (base))
     
     if _isFDS(base):
         _FDS(ldapresults, results)
     elif _isOpenLDAP(base):
-        log.info('In monparser open LDAP selected. ldapresults is %s \n' % (ldapresults))
+        log.debug('In monparser open LDAP selected. ldapresults is %s \n' % (ldapresults))
         _OpenLDAP(ldapresults, results)
     else:
         raise NotImplementedError, 'No parser for %s' % ldapresults

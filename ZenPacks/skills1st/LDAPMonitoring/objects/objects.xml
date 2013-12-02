@@ -17,7 +17,7 @@ True
 ${here/id}
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Status/LDAP
+/Status/LDAPMonitor
 </property>
 <property type="int" id="severity" mode="w" >
 3
@@ -28,7 +28,7 @@ ${here/id}
 <property type="string" id="ldapProto" mode="w" >
 ${dev/zLDAPProto}
 </property>
-<property type="int" id="ldapPort" mode="w" >
+<property type="string" id="ldapPort" mode="w" >
 ${dev/zLDAPPort}
 </property>
 <property type="string" id="ldapDN" mode="w" >
@@ -357,7 +357,7 @@ True
 <tomanycont id='thresholds'>
 <object id='Dead LDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="string" id="eventClass" mode="w" >
-/Status/LDAP
+/Status/LDAPMonitor
 </property>
 <property type="int" id="severity" mode="w" >
 5
@@ -380,7 +380,7 @@ True
 </object>
 <object id='Slow LDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="string" id="eventClass" mode="w" >
-/Status/LDAP
+/Status/LDAPMonitor
 </property>
 <property type="int" id="severity" mode="w" >
 3
@@ -1107,8 +1107,8 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'LDAP') -->
-<object id='/zport/dmd/Events/Status/LDAP' module='Products.ZenEvents.EventClass' class='EventClass'>
+<!-- ('', 'zport', 'dmd', 'Events', 'Status', 'LDAPMonitor') -->
+<object id='/zport/dmd/Events/Status/LDAPMonitor' module='Products.ZenEvents.EventClass' class='EventClass'>
 </object>
 <!-- ('', 'zport', 'dmd', 'Processes', 'LDAP') -->
 <object id='/zport/dmd/Processes/LDAP' module='Products.ZenModel.OSProcessOrganizer' class='OSProcessOrganizer'>
@@ -1129,9 +1129,6 @@ False
 <property type="int" id="sequence" mode="w" >
 0
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Server/Linux/devices/zen42.class.example.org/os/processes/usr_sbin_slapd 0ab335394f65ee00bdacbcac6606d1c8'/>
-</tomany>
 </object>
 </tomanycont>
 </object>

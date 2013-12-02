@@ -3,7 +3,7 @@
 # You must change the name of your daemon to something other than zenexample.
 # The "zenexample" name is special and will be ignored by the ZenPack
 # installation routine.
-DAEMON_NAME="zenLdap"
+DAEMON_NAME="zenldap"
 
 . $ZENHOME/bin/zenfunctions
 
@@ -14,6 +14,10 @@ PRGNAME=$DAEMON_NAME.py
 CFGFILE=$CFGDIR/$DAEMON_NAME.conf
 if [ ! -f $CFGFILE ]; then
     touch $CFGFILE
+    echo "#monitor localhost" >> $CFGFILE
+    echo "logseverity 20" >> $CFGFILE
+    echo "maxlogsize 10240" >> $CFGFILE
+    echo "maxbackuplogs 3" >> $CFGFILE
 fi
 
 

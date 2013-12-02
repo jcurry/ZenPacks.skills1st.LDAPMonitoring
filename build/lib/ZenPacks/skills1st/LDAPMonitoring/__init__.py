@@ -24,7 +24,7 @@ class ZenPack(ZenPackBase):
 
     packZProperties = [
         ('zLDAPProto', 'ldap',       'string'),
-        ('zLDAPPort',  389,          'int'),
+        ('zLDAPPort',  '389',          'string'),
         ('zLDAPDN',    'cn=Manager', 'string'),
         ('zLDAPPW',    'secret',     'password'),
         ]

@@ -1,12 +1,12 @@
 """
 LdapConfigService
-ZenHub service for providing configuration to the zenLdap collector daemon.
+ZenHub service for providing configuration to the zenldap collector daemon.
 
     This provides the daemon with a dictionary of datapoints for every device.
 """
 
 import logging
-log = logging.getLogger('zen.Ldap')
+log = logging.getLogger('zen.zenldap')
 
 import Globals
 from Products.ZenUtils.Utils import unused
@@ -21,7 +21,7 @@ from ZenPacks.skills1st.LDAPMonitoring.datasources.LdapDataSource import LdapDat
 # CollectorConfigService to make it as easy as possible for you to implement.
 class LdapConfigService(CollectorConfigService):
     """
-    ZenHub service for the zenLdap collector daemon.
+    ZenHub service for the zenldap collector daemon.
     """
 
     # When the collector daemon requests a list of devices to poll from ZenHub
@@ -41,12 +41,19 @@ class LdapConfigService(CollectorConfigService):
 
         # If the standard filtering logic said the device shouldn't be filtered
         # we can setup some other contraint.
+        ldapFlag = False
         if filter:
-            # We only monitor devices that start with "z".
+            # We only monitor devices that have a template with datasource of type "Ldap Protocol"
+            for t in device.getRRDTemplates():
+                for ds in t.datasources():
+                    if ds.sourcetype == 'Ldap Protocol':
+                        ldapFlag = True
             #return device.id.startswith('z')
-            pass
+        #    pass
 
-        return filter
+        #return filter
+        return CollectorConfigService._filterDevice(self, device) and ldapFlag
+            #'LDAPMonitor' in device.getProperty('zDeviceTemplates', [])
 
     # The _createDeviceProxy method allows you to build up the DeviceProxy
     # object that will be sent to the collector daemon. Whatever is returned
