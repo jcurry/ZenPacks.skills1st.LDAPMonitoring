@@ -75,7 +75,6 @@ Download
 Download the appropriate package for your Zenoss version from the list
 below.
 
-* Zenoss 3.0+ `Latest Package for Python 2.6`_
 * Zenoss 4.0+ `Latest Package for Python 2.7`_
 
 ZenPack installation
@@ -102,14 +101,11 @@ Change History
 
 Screenshots
 ===========
-|menus1|
 
 .. External References Below. Nothing Below This Line Should Be Rendered
 
-.. _Latest Package for Python 2.6: https://github.com/jcurry/ZenPacks.skills1st.MenuExamples/blob/master/dist/ZenPacks.skills1st.MenuExamples-1.0.3-py2.6.egg?raw=true
-.. _Latest Package for Python 2.7: https://github.com/downloads/jcurry/ZenPacks.skills1st.MenuExamples/ZenPacks.skills1st.MenuExamples-2.0-py2.7.egg
+.. _Latest Package for Python 2.7: https://github.com/jcurry/ZenPacks.skills1st.LDAPMonitoring/blob/master/dist/ZenPacks.skills1st.LDAPMonitoring-1.0.0-py2.7.egg
 
-.. |menus1| image:: http://github.com/jcurry/ZenPacks.skills1st.MenuExamples/raw/master/screenshots/menus1.jpg
 
 
 Acknowledgements
