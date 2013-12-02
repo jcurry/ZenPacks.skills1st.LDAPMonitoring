@@ -26,7 +26,7 @@ Requirements & Dependencies
 Components
 ==========
 
-The ZenPack introduces new zProperties through the __init__.py in the base directory:
+The ZenPack introduces new zProperties through the __init__.py in the base directory::
 
       packZProperties = [
         ('zLDAPProto', 'ldap',       'string'),
