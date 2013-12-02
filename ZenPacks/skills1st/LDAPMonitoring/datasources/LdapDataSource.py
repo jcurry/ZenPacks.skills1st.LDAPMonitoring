@@ -27,7 +27,7 @@ class LdapDataSource(ZenPackPersistence, RRDDataSource):
     sourcetype = sourcetypes[0]
 
     # Set default values for properties inherited from RRDDataSource.
-    eventClass = '/Status/LDAP'
+    eventClass = '/Status/LDAPMonitor'
     component = "${here/id}"
 
     # Add default values for custom properties of this datasource.

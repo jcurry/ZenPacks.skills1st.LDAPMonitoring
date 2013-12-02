@@ -115,7 +115,7 @@ class ZenLdapTask(ObservableMixin):
             summary=summary,
             message=err,
             component=comp or collectorName,
-            eventClass='/Status/LDAP',
+            eventClass='/Status/LDAPMonitor',
             device=self._devId,
             severity=severity,
             agent=collectorName,
@@ -134,7 +134,7 @@ class ZenLdapTask(ObservableMixin):
             event = dict(
                 summary = "Could not fetch statistics",
                 message = "Could not fetch statistics",
-                eventClass = '/Status/LDAP',
+                eventClass = '/Status/LDAPMonitor',
                 device = self._devId,
                 severity = severity,
                 agent = self._preferences.collectorName,
