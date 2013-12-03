@@ -41,6 +41,7 @@ class LdapDataSource(ZenPackPersistence, RRDDataSource):
     ldapDN = '${dev/zLDAPDN}'
     ldapPW = '${dev/zLDAPPW}'
     timeout = 20
+    cycletime = 20
 
     searchFilter = 'cn=monitor'
 
@@ -50,6 +51,7 @@ class LdapDataSource(ZenPackPersistence, RRDDataSource):
         {'id':'ldapDN',       'type':'string',    'mode':'w'},
         {'id':'ldapPW',       'type':'string',    'mode':'w'},
         {'id':'timeout',      'type':'int',       'mode':'w'},
+        {'id':'cycletime',    'type':'int',       'mode':'w'},
         {'id':'searchFilter', 'type':'string',    'mode':'r'},
         )
 

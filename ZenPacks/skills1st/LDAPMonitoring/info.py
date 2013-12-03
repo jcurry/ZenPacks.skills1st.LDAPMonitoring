@@ -28,6 +28,7 @@ class LdapDataSourceInfo(RRDDataSourceInfo):
     ldapDN    = ProxyProperty('zLDAPDN')
     ldapPW    = ProxyProperty('zLDAPPW')
     timeout   = ProxyProperty('timeout')
+    cycletime   = ProxyProperty('cycletime')
     searchFilter = ProxyProperty('searchFilter')
 
     # RRDDataSourceInfo classes can create a property called "testable" that

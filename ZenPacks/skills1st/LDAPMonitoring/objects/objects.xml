@@ -40,6 +40,9 @@ ${dev/zLDAPPW}
 <property type="int" id="timeout" mode="w" >
 20
 </property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
 <property type="string" id="searchFilter" mode="r" >
 cn=monitor
 </property>
@@ -369,10 +372,10 @@ True
 True
 </property>
 <property type="string" id="minval" mode="w" >
-3000
+30000
 </property>
 <property type="string" id="maxval" mode="w" >
-300
+3000
 </property>
 <property type="int" id="escalateCount" mode="w" >
 0
@@ -392,10 +395,10 @@ True
 True
 </property>
 <property type="string" id="minval" mode="w" >
-300
+3000
 </property>
 <property type="string" id="maxval" mode="w" >
-12
+25
 </property>
 <property type="int" id="escalateCount" mode="w" >
 0
@@ -1028,7 +1031,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-TimeTicks (1/100 sec)
+milliseconds
 </property>
 <property type="boolean" id="log" mode="w" >
 False

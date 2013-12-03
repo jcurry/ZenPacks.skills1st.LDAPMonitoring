@@ -27,6 +27,7 @@ class ZenPack(ZenPackBase):
         ('zLDAPPort',  '389',          'string'),
         ('zLDAPDN',    'cn=Manager', 'string'),
         ('zLDAPPW',    'secret',     'password'),
+        ('zLDAPSlaves', [],     'lines'),
         ]
 
 

@@ -38,11 +38,6 @@ ZenPacks/skills1st/LDAPMonitoring/migrate/ExampleMigration.pyc
 ZenPacks/skills1st/LDAPMonitoring/migrate/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/modeler/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/modeler/plugins/__init__.py
-ZenPacks/skills1st/LDAPMonitoring/modeler/plugins/community/__init__.py
-ZenPacks/skills1st/LDAPMonitoring/modeler/plugins/community/cmd/ExampleCMD.py.example
-ZenPacks/skills1st/LDAPMonitoring/modeler/plugins/community/cmd/__init__.py
-ZenPacks/skills1st/LDAPMonitoring/modeler/plugins/community/snmp/ExampleSNMP.py.example
-ZenPacks/skills1st/LDAPMonitoring/modeler/plugins/community/snmp/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/objects/objects.xml
 ZenPacks/skills1st/LDAPMonitoring/reports/Example_Reports/Example_Report.rpt.example
 ZenPacks/skills1st/LDAPMonitoring/reports/plugins/example_plugin.py

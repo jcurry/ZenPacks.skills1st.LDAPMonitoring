@@ -213,21 +213,15 @@ class ZenLdapTask(ObservableMixin):
 
         slapd.unbind()
 
-        # Set response time unit to TimeTicks (1/100 sec) as we typically will get
+        # Set response time unit to  millisecondss we typically will get
         #  sub-second response time and we do not want that to represent as the integer 0
-        resp_time = (time.time() - start_time) * 100
+        resp_time = (time.time() - start_time) * 1000
 
         # get monparsers to sort out what was returned ...
         results = parse(resultseq, {'responsetime':resp_time})
 
         self._collectSuccessful(results)
 
-
-#    def doTask(self):
-        # This method must return a deferred because the collector framework
-        # is asynchronous.
-#        d = defer.Deferred()
-#        return d
 
     # cleanup is required to implement the IScheduledTask interface.
     def cleanup(self):

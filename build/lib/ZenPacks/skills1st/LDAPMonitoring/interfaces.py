@@ -43,5 +43,6 @@ class ILdapDataSourceInfo(IRRDDataSourceInfo):
     ldapDN = schema.Text(title=_t(u'User (Distinguished Name)'))
     ldapPW = schema.Password(title=_t(u'Password'))
     timeout = schema.Int(title=_t(u'Connection Timeout (seconds)'))
+    cycletime = schema.Int(title=_t(u'Cycle Time (seconds)'))
     searchFilter = schema.Text(title=_t(u'Search filter'))
 
