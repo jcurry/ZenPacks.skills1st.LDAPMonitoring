@@ -356,6 +356,32 @@ True
 </object>
 </tomanycont>
 </object>
+<object id='ldapRelCheck' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Cmd/Fail
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+${here/ZenPackManager/packs/ZenPacks.skills1st.LDAPMonitoring/path}/libexec/ldap_rel_check.py -N "${device/zLDAPDN}"   -W "${device/zLDAPPW}" -P "${device/zLDAPProto}" -D "${device/id}" -S "${device/zLDAPSlaves}"
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+</object>
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Dead LDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
@@ -1044,6 +1070,9 @@ False
 </property>
 <property type="int" id="maxy" mode="w" >
 -1
+</property>
+<property type="text" id="custom" mode="w" >
+--units-exponent=0
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True

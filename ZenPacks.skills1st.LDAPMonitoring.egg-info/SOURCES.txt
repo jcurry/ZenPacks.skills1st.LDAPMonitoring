@@ -32,7 +32,7 @@ ZenPacks/skills1st/LDAPMonitoring/datasources/LdapDataSource.py
 ZenPacks/skills1st/LDAPMonitoring/datasources/LdapDataSource.pyc
 ZenPacks/skills1st/LDAPMonitoring/datasources/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/datasources/__init__.pyc
-ZenPacks/skills1st/LDAPMonitoring/libexec/placeholder.txt
+ZenPacks/skills1st/LDAPMonitoring/libexec/ldap_rel_check.py
 ZenPacks/skills1st/LDAPMonitoring/migrate/ExampleMigration.py
 ZenPacks/skills1st/LDAPMonitoring/migrate/ExampleMigration.pyc
 ZenPacks/skills1st/LDAPMonitoring/migrate/__init__.py

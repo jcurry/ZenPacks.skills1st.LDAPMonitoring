@@ -33,10 +33,15 @@ The ZenPack introduces new zProperties through the __init__.py in the base direc
         ('zLDAPPort',  389,          'string'),
         ('zLDAPDN',    'cn=Manager', 'string'),
         ('zLDAPPW',    'secret',     'password'),
+        ('zLDAPSlaves', [],          'lines'),
         ]
 
 These properties are all unique; they are not the same as those shipped with the
 ZenPacks.zenoss.LDAPMonitor ZenPack.
+
+zLDAPSlaves is used to denote slaves of an LDAP master.  It is used to check that
+the contextCSN is the same between master and slaves, as a replication check.  The 
+LDAP parameters for master and slaves must be the same.
 
 A new LDAP datasource called "Ldap Protocol" is introduced.  It utilises the new
 zProperties and runs an LDAP query with "cn=monitor".  The datasource from the standard
@@ -62,7 +67,10 @@ The event /Status/LDAPMonitor is provided as an object of the ZenPack.
 
 A sample LDAP Protocol monitoring template is provided called 
 LDAPMonitor (the standard template provided with ZenPacks.zenoss.LDAPMonitor is
-called LDAPServer).
+called LDAPServer). The BasicLdap datasource gathers about 30 attributes using
+a cn=monitor LDAP query.  The ldapRelCheck datasource is a command datasource that
+runs the ldap_rel_check.py script in the ZenPack's libexec directory, to
+determine whether replication is working.
 
 
 
