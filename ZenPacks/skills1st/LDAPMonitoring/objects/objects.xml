@@ -364,7 +364,7 @@ COMMAND
 True
 </property>
 <property type="string" id="eventClass" mode="w" >
-/Cmd/Fail
+/Status/LDAPMonitor
 </property>
 <property type="int" id="severity" mode="w" >
 3

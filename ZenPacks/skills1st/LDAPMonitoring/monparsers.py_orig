@@ -55,7 +55,6 @@ def _OpenLDAP(ldapresults, results={}):
     results['removeentryops'] = _dn('cn=delete,cn=operations,cn=monitor', ldapresults).get('monitorOpCompleted', [0])[0]
     results['searchops'] = _dn('cn=search,cn=operations,cn=monitor', ldapresults).get('monitorOpCompleted', [0])[0]
     results['referrals'] = _dn('cn=referrals,cn=statistics,cn=monitor', ldapresults).get('monitorCounter', [0])[0]
-    results['simpleauthbinds'] = _dn('cn=bind,cn=operations,cn=monitor', ldapresults).get('monitorOpCompleted', [0])[0]
 
 def parse(ldapresults, results):
     """

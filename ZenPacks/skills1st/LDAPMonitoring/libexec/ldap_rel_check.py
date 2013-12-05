@@ -13,7 +13,6 @@
 #                       -S ${device/zLDAPSlaves}
 #   eg. /usr/bin/ldapsearch -x  -LLL -D ${device/zLDAPDN}  -w ${device/zLDAPPW} -H ${device/zLDAPProto}://${device/id}/  -b 'dc=mserv,dc=local' -s base 'contextCSN'
 #
-#   eg. ./ldap_rel_check.sh -N cn=zenossmonitoring,ou=internalaccounts,ou=people,dc=mserv,dc=local -W BaconTeaAndCakes -P ldaps -D ldaplabmaster.mserv.local -S ldaplabslave.mserv.local
 
 from subprocess import Popen,PIPE
 from optparse import OptionParser
