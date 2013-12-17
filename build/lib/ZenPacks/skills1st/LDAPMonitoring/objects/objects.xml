@@ -23,7 +23,7 @@ ${here/id}
 3
 </property>
 <property type="int" id="cycletime" mode="w" >
-20
+300
 </property>
 <property type="string" id="ldapProto" mode="w" >
 ${dev/zLDAPProto}
@@ -41,7 +41,7 @@ ${dev/zLDAPPW}
 20
 </property>
 <property type="int" id="cycletime" mode="w" >
-20
+300
 </property>
 <property type="string" id="searchFilter" mode="r" >
 cn=monitor
@@ -1847,6 +1847,9 @@ False
 <property type="int" id="sequence" mode="w" >
 0
 </property>
+<tomany id='instances'>
+<link objid='/zport/dmd/Devices/Server/Linux/devices/zen42.class.example.org/os/processes/usr_sbin_slapd 0ab335394f65ee00bdacbcac6606d1c8'/>
+</tomany>
 </object>
 </tomanycont>
 </object>
