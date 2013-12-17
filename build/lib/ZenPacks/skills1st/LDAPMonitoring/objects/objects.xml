@@ -567,6 +567,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+/ sec
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -685,7 +688,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-Connections
+Connections / sec
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -743,6 +746,9 @@ AVERAGE
 </property>
 <property type="int" id="width" mode="w" >
 500
+</property>
+<property type="string" id="units" mode="w" >
+/ sec
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1298,6 +1304,9 @@ AVERAGE
 <property type="int" id="width" mode="w" >
 500
 </property>
+<property type="string" id="units" mode="w" >
+/ sec
+</property>
 <property type="boolean" id="log" mode="w" >
 False
 </property>
@@ -1471,6 +1480,9 @@ AVERAGE
 </property>
 <property type="int" id="width" mode="w" >
 500
+</property>
+<property type="string" id="units" mode="w" >
+/ sec
 </property>
 <property type="boolean" id="log" mode="w" >
 False
