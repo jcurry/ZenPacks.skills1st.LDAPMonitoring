@@ -18,62 +18,68 @@
 
 
 MONITORABLE =  (
-               ('addentryops', 'DERIVE'),
-               ('anonymousbinds', 'DERIVE'),
-               ('bindsecurityerrors', 'DERIVE'),
-               ('bytesrecv', 'DERIVE'),
-               ('bytessent', 'DERIVE'),
-               ('cacheentries', 'DERIVE'),
-               ('cachehits', 'DERIVE'),
-               ('chainings', 'DERIVE'),
-               ('compareops', 'DERIVE'),
-               ('connections', 'DERIVE'),
-               ('connectionseq', 'DERIVE'),
-               ('copyentries', 'DERIVE'),
-               ('entriesreturned', 'DERIVE'),
+               ('opsInitiated', 'DERIVE'),
+               ('opsCompleted', 'DERIVE'),
+               ('addopsInitiated', 'DERIVE'),
+               ('addopsCompleted', 'DERIVE'),
+               ('compareopsInitiated', 'DERIVE'),
+               ('compareopsCompleted', 'DERIVE'),
+               ('modifyopsInitiated', 'DERIVE'),
+               ('modifyopsCompleted', 'DERIVE'),
+               ('modrdnopsInitiated', 'DERIVE'),
+               ('modrdnopsCompleted', 'DERIVE'),
+               ('deleteopsInitiated', 'DERIVE'),
+               ('deleteopsCompleted', 'DERIVE'),
+               ('searchopsInitiated', 'DERIVE'),
+               ('searchopsCompleted', 'DERIVE'),
+               ('abandonopsInitiated', 'DERIVE'),
+               ('abandonopsCompleted', 'DERIVE'),
+               ('extendedopsInitiated', 'DERIVE'),
+               ('extendedopsCompleted', 'DERIVE'),
                ('errors', 'DERIVE'),
-               ('inops', 'DERIVE'),
-               ('listops', 'DERIVE'),
-               ('masterentries', 'DERIVE'),
-               ('modifyentryops', 'DERIVE'),
-               ('modifyrdnops', 'DERIVE'),
-               ('onelevelsearchops', 'DERIVE'),
-               ('readops', 'DERIVE'),
-               ('referrals', 'DERIVE'),
-               ('referralsreturned', 'DERIVE'),
-               ('removeentryops', 'DERIVE'),
-               ('searchops', 'DERIVE'),
-               ('securityerrors', 'DERIVE'),
-               ('simpleauthbinds', 'DERIVE'),
-               ('slavehits', 'DERIVE'),
-               ('strongauthbinds', 'DERIVE'),
-               ('unauthbinds', 'DERIVE'),
-               ('wholetreesearchops', 'DERIVE'),
+               ('connectionstotal', 'DERIVE'),
+               ('connectionscurrent', 'GAUGE'),
+               ('bytes', 'DERIVE'),
+               ('entries', 'DERIVE'),
+               ('bindopsInitiated', 'DERIVE'),
+               ('bindopsCompleted', 'DERIVE'),
+               ('unbindopsInitiated', 'DERIVE'),
+               ('unbindopsCompleted', 'DERIVE'),
                ('responsetime', 'GAUGE'),
                 )
 ERRORDP = (
-           ('bindsecurityerrors', 'Bind Security'),
-           ('securityerrors', 'Security'),
            ('errors', 'Total Errors'))
 
-BINDDP = (('anonymousbinds', 'Anonymous'),
-          ('simpleauthbinds', 'Simple Auth'),
-          ('strongauthbinds', 'Strong Auth'),
-          ('unauthbinds', 'Unauth'))
+BINDDP = (('bindopsInitiated', 'Binds Initiated'),
+          ('bindopsCompleted', 'Binds Completed'),
+          ('unbindopsInitiated', 'Unbinds Initiated'),
+          ('unbindopsCompleted', 'Unbinds Completed')
+          )
 
-# wtf - no failures!!
-FAILDP = (('failures', 'Failures'),)
+OPSDP = (
+         ('opsInitiated', 'Total Operations Initiated'),
+         ('opsCompleted', 'Total Operations Completed'),
+         ('addopsInitiated', 'Add Operations Initiated'),
+         ('addopsCompleted', 'Add Operations Completed'),
+         ('compareopsCompleted', 'Compare Operations Completed'),
+         ('compareopsCompleted', 'Compare Operations Completed'),
+         ('modifyopsCompleted', 'Modify Operations Completed'),
+         ('modifyopsCompleted', 'Modify Operations Completed'),
+         ('modrdnopsCompleted', 'Modrdn Operations Completed'),
+         ('modrdnopsCompleted', 'Modrdn Operations Completed'),
+         ('deleteopsCompleted', 'Delete Operations Completed'),
+         ('deleteopsCompleted', 'Delete Operations Completed'),
+         ('searchopsCompleted', 'Search Operations Completed'),
+         ('searchopsCompleted', 'Search Operations Completed'),
+         ('abandonopsCompleted', 'Abandon Operations Completed'),
+         ('abandonopsCompleted', 'Abandon Operations Completed'),
+         ('extendedopsCompleted', 'Extended Operations Completed'),
+         ('extendedopsCompleted', 'Extended Operations Completed'),
+         ('connectionstotal', 'Total Connections'),
+         ('connectionscurrent', 'Current Connections'),
+         ('bytes', 'Bytes'),
+         ('entries', 'Entries'),
+         )
 
-OPSDP = (('addentryops', 'Add Entry'),
-         ('modifyentryops', 'Mod Entry'),
-         ('removeentryops', 'Del Entry'),
-         ('searchops', 'Search'),
-         ('referrals', 'Referrals'),
-         ('chainings', 'Chainings'))
 
-CACHEDP = (('cacheentries', 'Cache Entries'),
-           ('cachehits', 'Cache Hits'),
-           ('slavehits', 'Slave Hits'),
-           ('masterentries', 'Master Entries'))
-
-MONITORED = ERRORDP + BINDDP + OPSDP + CACHEDP
+MONITORED = ERRORDP + BINDDP + OPSDP 
