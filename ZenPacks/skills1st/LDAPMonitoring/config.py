@@ -45,6 +45,14 @@ MONITORABLE =  (
                ('bindopsCompleted', 'DERIVE'),
                ('unbindopsInitiated', 'DERIVE'),
                ('unbindopsCompleted', 'DERIVE'),
+               ('threadsMax', 'GAUGE'),
+               ('threadsMaxPending', 'GAUGE'),
+               ('threadsOpen', 'GAUGE'),
+               ('threadsStarting', 'GAUGE'),
+               ('threadsActive', 'GAUGE'),
+               ('threadsPending', 'GAUGE'),
+               ('threadsBackload', 'GAUGE'),
+               ('threadsState', 'GAUGE'),
                ('responsetime', 'GAUGE'),
                 )
 ERRORDP = (
@@ -54,6 +62,16 @@ BINDDP = (('bindopsInitiated', 'Binds Initiated'),
           ('bindopsCompleted', 'Binds Completed'),
           ('unbindopsInitiated', 'Unbinds Initiated'),
           ('unbindopsCompleted', 'Unbinds Completed')
+          )
+
+THREADDP = (('threadsMax', 'Threads Max'),
+          ('threadsMaxPending', 'Threads Max Pending'),
+          ('threadsOpen', 'Threads Open'),
+          ('threadsStarting', 'Threads Starting'),
+          ('threadsActive', 'Threads Active'),
+          ('threadsPending', 'Threads Pending'),
+          ('threadsBackload', 'Threads Backload'),
+          ('threadsState', 'Threads State')
           )
 
 OPSDP = (
@@ -82,4 +100,4 @@ OPSDP = (
          )
 
 
-MONITORED = ERRORDP + BINDDP + OPSDP 
+MONITORED = ERRORDP + BINDDP + OPSDP + THREADDP
