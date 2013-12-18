@@ -363,6 +363,32 @@ False
 Auto
 </property>
 </object>
+<object id='ldapRelCheckFiles' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
+<property select_variable="sourcetypes" type="selection" id="sourcetype" mode="w" >
+COMMAND
+</property>
+<property type="boolean" id="enabled" mode="w" >
+True
+</property>
+<property type="string" id="eventClass" mode="w" >
+/Status/LDAPMonitor
+</property>
+<property type="int" id="severity" mode="w" >
+3
+</property>
+<property type="string" id="commandTemplate" mode="w" >
+${here/ZenPackManager/packs/ZenPacks.skills1st.LDAPMonitoring/path}/libexec/ldap_rel_check_files.py -N "${device/zLDAPDN}"   -W "${device/zLDAPPW}" -P "${device/zLDAPProto}" -D "${device/id}" -S "${device/zLDAPSlaves}"
+</property>
+<property type="int" id="cycletime" mode="w" >
+300
+</property>
+<property type="boolean" id="usessh" mode="w" >
+False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
+</property>
+</object>
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='Dead LDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
@@ -439,7 +465,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-2
+1
 </property>
 <tomanycont id='graphPoints'>
 <object id='bindopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -586,7 +612,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-7
+3
 </property>
 <tomanycont id='graphPoints'>
 <object id='bytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -646,7 +672,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-6
+8
 </property>
 <tomanycont id='graphPoints'>
 <object id='connectionscurrent' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -706,7 +732,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-5
+7
 </property>
 <tomanycont id='graphPoints'>
 <object id='connectionstotal' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -766,7 +792,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-8
+9
 </property>
 <tomanycont id='graphPoints'>
 <object id='entries' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -826,7 +852,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-1
+11
 </property>
 <tomanycont id='graphPoints'>
 <object id='errors' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -860,15 +886,12 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
-<object id='LDAP Operations' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<object id='LDAP Operations Completed' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
 <property type="int" id="height" mode="w" >
 100
 </property>
 <property type="int" id="width" mode="w" >
 500
-</property>
-<property type="string" id="units" mode="w" >
-/ sec
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -886,7 +909,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-0
+6
 </property>
 <tomanycont id='graphPoints'>
 <object id='abandonopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -918,38 +941,9 @@ BasicLdap_abandonopsCompleted
 AVERAGE
 </property>
 </object>
-<object id='abandonopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-BasicLdap_abandonopsInitiated
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 <object id='addopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-2
+1
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -976,38 +970,9 @@ BasicLdap_addopsCompleted
 AVERAGE
 </property>
 </object>
-<object id='addopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-3
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-BasicLdap_addopsInitiated
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 <object id='compareopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-4
+2
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1034,38 +999,9 @@ BasicLdap_compareopsCompleted
 AVERAGE
 </property>
 </object>
-<object id='compareopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-5
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-BasicLdap_compareopsInitiated
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 <object id='deleteopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-6
+3
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1092,38 +1028,9 @@ BasicLdap_deleteopsCompleted
 AVERAGE
 </property>
 </object>
-<object id='deleteopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-7
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-BasicLdap_deleteopsInitiated
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 <object id='extendedopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-8
+4
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1150,38 +1057,9 @@ BasicLdap_extendedopsCompleted
 AVERAGE
 </property>
 </object>
-<object id='extendedopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-9
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-BasicLdap_extendedopsInitiated
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 <object id='modifyopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-10
+5
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1208,38 +1086,9 @@ BasicLdap_modifyopsCompleted
 AVERAGE
 </property>
 </object>
-<object id='modifyopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-11
-</property>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-1
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-${graphPoint/id}
-</property>
-<property type="long" id="limit" mode="w" >
--1
-</property>
-<property type="string" id="dpName" mode="w" >
-BasicLdap_modifyopsInitiated
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
 <object id='modrdnopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-12
+6
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1266,9 +1115,214 @@ BasicLdap_modrdnopsCompleted
 AVERAGE
 </property>
 </object>
+</tomanycont>
+</object>
+<object id='LDAP Operations Initiated' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+/ sec
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+False
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+5
+</property>
+<tomanycont id='graphPoints'>
+<object id='abandonopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+0
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+BasicLdap_abandonopsInitiated
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='addopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+1
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+BasicLdap_addopsInitiated
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='compareopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+2
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+BasicLdap_compareopsInitiated
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='deleteopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+3
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+BasicLdap_deleteopsInitiated
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='extendedopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+4
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+BasicLdap_extendedopsInitiated
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+<object id='modifyopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+5
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+LINE
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+${graphPoint/id}
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+BasicLdap_modifyopsInitiated
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
 <object id='modrdnopsInitiated' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property type="long" id="sequence" mode="w" >
-13
+6
 </property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
@@ -1323,7 +1377,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-9
+10
 </property>
 <tomanycont id='graphPoints'>
 <object id='opsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -1415,7 +1469,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-3
+0
 </property>
 <tomanycont id='graphPoints'>
 <object id='Dead LDAP' module='Products.ZenModel.ThresholdGraphPoint' class='ThresholdGraphPoint'>
@@ -1500,7 +1554,7 @@ False
 True
 </property>
 <property type="long" id="sequence" mode="w" >
-10
+2
 </property>
 <tomanycont id='graphPoints'>
 <object id='searchopsCompleted' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
@@ -1847,9 +1901,6 @@ False
 <property type="int" id="sequence" mode="w" >
 0
 </property>
-<tomany id='instances'>
-<link objid='/zport/dmd/Devices/Server/Linux/devices/zen42.class.example.org/os/processes/usr_sbin_slapd 0ab335394f65ee00bdacbcac6606d1c8'/>
-</tomany>
 </object>
 </tomanycont>
 </object>

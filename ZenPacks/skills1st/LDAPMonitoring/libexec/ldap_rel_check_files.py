@@ -15,7 +15,8 @@
 #   eg. /usr/bin/ldapsearch -x  -LLL -D ${device/zLDAPDN}  -w ${device/zLDAPPW} -H ${device/zLDAPProto}://${device/id}/  -b 'cn=monitor' -s sub '*' '+'
 #
 
-from subprocess import Popen,PIPE
+import subprocess
+#from subprocess import Popen,PIPE,call
 from optparse import OptionParser
 import sys
 
@@ -74,15 +75,25 @@ def main():
     device = options.device
     #print 'DN is %s pwd is %s proto is %s device is %s slaves is %s' % ( dn, pwd, options.proto, device, options.slaves)
 
-    exitCode = STATE_OK
-
-    cmd = '/usr/bin/ldapsearch -x  -LLL -D '+ dn +' -w '+ pwd +' -H '+options.proto + '://' + device + ' -b \'cn=monitor\' -s sub \'*\' \'+\' '
+    url=options.proto +  '://' + device
+    #print ' dn is %s and pwd is %s \n' % (dn,pwd)
+    # Blank strings actually come through as "" - need to make them really the null string
+    if dn == '""':
+        dn = ''
+    if pwd == '""':
+        pwd=''
+    
+    cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "dc=mserv,dc=local", "-S", "dn", "-s",  "sub", "*", "+" ]
+    #cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "cn=monitor", "-S",  "dn" ]
 
     # Create output  file for master
-    master_out = open('/tmp/master.out', 'w')
+    masterFile='/tmp/' + device + '_ldapMaster.out'
+    master_out = open(masterFile, 'w')
 
-    print 'cmd is %s ' % (cmd)
-    p = Popen(cmd, shell=True, stdout=master_out,stderr=master_out)
+    #print 'cmd is %s ' % (cmd)
+    p = subprocess.call(cmd, shell=False, stdout=master_out,stderr=master_out)
+    #master_out.flush()
+    #os.fsync(master_out.fileno())
     master_out.close()
 
     # Now check slaves and compare with master file
@@ -91,14 +102,19 @@ def main():
         #  eg. "['s1', 's2']"
 
         for s in eval(options.slaves):
-            cmd = '/usr/bin/ldapsearch -x  -LLL -D '+ dn +' -w '+ pwd +' -H '+options.proto + '://' + s + ' -b \'cn=monitor\' -s sub \'*\' \'+\' '
-            slave_out = open('/tmp/slave.out', 'w')
-            print 'cmd is %s ' % (cmd)
-            p = Popen(cmd, shell=True, stdout=slave_out,stderr=slave_out)
+            url=options.proto +  '://' + s
+            cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "dc=mserv,dc=local", "-S", "dn", "-s",  "sub", "*", "+" ]
+            #cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "cn=monitor", "-S",  "dn"]
+            slaveFile = '/tmp/' + s + '_ldapSlave.out'
+            slave_out = open(slaveFile, 'w')
+            #print 'cmd is %s ' % (cmd)
+            p = subprocess.call(cmd, shell=False, stdout=slave_out,stderr=slave_out)
+            #slave_out.flush()
+            #os.fsync(slave_out.fileno())
             slave_out.close()
 
-            master_out = open("/tmp/master.out").readlines()
-            slave_out = open("/tmp/slave.out").readlines()
+            master_out = open(masterFile).readlines()
+            slave_out = open(slaveFile).readlines()
 
             print 'master is %s long and slave is %s long \n' % (len(master_out), len(slave_out))
             len_diff = len(master_out) - len(slave_out)
@@ -112,7 +128,6 @@ def main():
                 sys.exit(STATE_WARNING)
 
             for m, s in zip(master_out, slave_out):
-                print ' in for loop m is %s s is %s \n ' % (m,s)
                 if m != s:
                     try:
                         master_out.close()
