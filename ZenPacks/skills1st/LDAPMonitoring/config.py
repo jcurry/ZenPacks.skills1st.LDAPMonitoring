@@ -36,7 +36,6 @@ MONITORABLE =  (
                ('abandonopsCompleted', 'DERIVE'),
                ('extendedopsInitiated', 'DERIVE'),
                ('extendedopsCompleted', 'DERIVE'),
-               ('errors', 'DERIVE'),
                ('connectionstotal', 'DERIVE'),
                ('connectionscurrent', 'GAUGE'),
                ('bytes', 'DERIVE'),
@@ -52,11 +51,8 @@ MONITORABLE =  (
                ('threadsActive', 'GAUGE'),
                ('threadsPending', 'GAUGE'),
                ('threadsBackload', 'GAUGE'),
-               ('threadsState', 'GAUGE'),
                ('responsetime', 'GAUGE'),
                 )
-ERRORDP = (
-           ('errors', 'Total Errors'))
 
 BINDDP = (('bindopsInitiated', 'Binds Initiated'),
           ('bindopsCompleted', 'Binds Completed'),
@@ -70,8 +66,7 @@ THREADDP = (('threadsMax', 'Threads Max'),
           ('threadsStarting', 'Threads Starting'),
           ('threadsActive', 'Threads Active'),
           ('threadsPending', 'Threads Pending'),
-          ('threadsBackload', 'Threads Backload'),
-          ('threadsState', 'Threads State')
+          ('threadsBackload', 'Threads Backload')
           )
 
 OPSDP = (
@@ -100,4 +95,4 @@ OPSDP = (
          )
 
 
-MONITORED = ERRORDP + BINDDP + OPSDP + THREADDP
+MONITORED = BINDDP + OPSDP + THREADDP

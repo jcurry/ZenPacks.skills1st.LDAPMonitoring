@@ -61,7 +61,6 @@ def _OpenLDAP(ldapresults, results={}):
     results['threadsActive'] = _dn('cn=active,cn=threads,cn=monitor', ldapresults).get('monitoredInfo', [0])[0]
     results['threadsPending'] = _dn('cn=pending,cn=threads,cn=monitor', ldapresults).get('monitoredInfo', [0])[0]
     results['threadsBackload'] = _dn('cn=backload,cn=threads,cn=monitor', ldapresults).get('monitoredInfo', [0])[0]
-    results['threadsState'] = _dn('cn=state,cn=threads,cn=monitor', ldapresults).get('monitoredInfo', [0])[0]
 
     results['opsInitiated'] = _dn('cn=operations,cn=monitor', ldapresults).get('monitorOpInitiated', [0])[0]
     results['opsCompleted'] = _dn('cn=operations,cn=monitor', ldapresults).get('monitorOpCompleted', [0])[0]
