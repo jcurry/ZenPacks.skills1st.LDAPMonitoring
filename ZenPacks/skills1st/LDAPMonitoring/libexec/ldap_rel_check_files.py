@@ -116,7 +116,6 @@ def main():
             master_out = open(masterFile).readlines()
             slave_out = open(slaveFile).readlines()
 
-            print 'master is %s long and slave is %s long \n' % (len(master_out), len(slave_out))
             len_diff = len(master_out) - len(slave_out)
             if len_diff != 0:
                 try:
@@ -124,17 +123,18 @@ def main():
                     slave_out.close()
                 except:
                     pass
-                print "Master and Slave files are different length"
+                print 'LDAP content of  %s is different to %s - different length' % (device, s)
                 sys.exit(STATE_WARNING)
 
-            for m, s in zip(master_out, slave_out):
-                if m != s:
+            for m, sl in zip(master_out, slave_out):
+                if m != sl:
                     try:
                         master_out.close()
                         slave_out.close()
                     except:
                         pass
-                    print "Master and slave files differ. Expected %r; got %r." % (m, s)
+                    print 'LDAP content of  %s is different to %s ' % (device, s)
+                    #print "Master and slave files differ. Expected %r; got %r." % (m, s)
                     sys.exit(STATE_WARNING)
 
             # If we get here then we have checked all slaves and found no errors

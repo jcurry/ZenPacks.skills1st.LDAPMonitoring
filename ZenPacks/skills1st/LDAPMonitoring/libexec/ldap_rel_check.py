@@ -98,7 +98,7 @@ def main():
             for r in p.stdout.readlines():
                 slaveCSN.append(r)
             if slaveCSN != masterCSN:
-                print 'Slave %s CSN different from master %s. Master CSN is %s. Slave CSN is %s ' % (s, device, masterCSN, slaveCSN)
+                print 'LDAP replication broken between  %s and %s - contextCSNs are different ' % (device, s)
                 sys.exit(STATE_WARNING)
             else:
                 print 'Slave %s CSN same as  master %s. CSN is %s.  ' % (s, device, masterCSN)
