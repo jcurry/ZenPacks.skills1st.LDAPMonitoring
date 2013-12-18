@@ -393,7 +393,7 @@ Auto
 <tomanycont id='thresholds'>
 <object id='Dead LDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="string" id="eventClass" mode="w" >
-/Status/LDAPMonitor
+/Status/LDAPMonitor/ResponseTime
 </property>
 <property type="int" id="severity" mode="w" >
 5
@@ -416,7 +416,7 @@ True
 </object>
 <object id='Slow LDAP' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
 <property type="string" id="eventClass" mode="w" >
-/Status/LDAPMonitor
+/Status/LDAPMonitor/ResponseTime
 </property>
 <property type="int" id="severity" mode="w" >
 3
@@ -431,7 +431,7 @@ True
 3000
 </property>
 <property type="string" id="maxval" mode="w" >
-25
+40
 </property>
 <property type="int" id="escalateCount" mode="w" >
 0
@@ -1367,9 +1367,6 @@ ${graphPoint/id}
 <property type="long" id="limit" mode="w" >
 -1
 </property>
-<property type="string" id="rpn" mode="w" >
-100,/
-</property>
 <property type="string" id="dpName" mode="w" >
 BasicLdap_responsetime
 </property>
@@ -1795,6 +1792,8 @@ AVERAGE
 <object id='Replication_CSN' module='Products.ZenEvents.EventClass' class='EventClass'>
 </object>
 <object id='Replication_Files' module='Products.ZenEvents.EventClass' class='EventClass'>
+</object>
+<object id='ResponseTime' module='Products.ZenEvents.EventClass' class='EventClass'>
 </object>
 </object>
 <!-- ('', 'zport', 'dmd', 'Processes', 'LDAP') -->
