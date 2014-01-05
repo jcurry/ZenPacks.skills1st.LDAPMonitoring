@@ -33,6 +33,7 @@ The ZenPack introduces new zProperties through the __init__.py in the base direc
         ('zLDAPPort',  389,          'string'),
         ('zLDAPDN',    'cn=Manager', 'string'),
         ('zLDAPPW',    'secret',     'password'),
+        ('zLDAPRepContext',    'dc=example,dc=org',     'string'),
         ('zLDAPSlaves', [],          'lines'),
         ]
 
@@ -41,7 +42,10 @@ ZenPacks.zenoss.LDAPMonitor ZenPack.
 
 zLDAPSlaves is used to denote slaves of an LDAP master.  It is used to check that
 the contextCSN is the same between master and slaves, as a replication check.  The 
-LDAP parameters for master and slaves must be the same.
+LDAP parameters for master and slaves MUST be the same.
+
+zLDAPRepContext is used to specify parameters for a full check of the replication
+between master and slave(s).
 
 A new LDAP datasource called "Ldap Protocol" is introduced.  It utilises the new
 zProperties and runs an LDAP query with "cn=monitor".  The datasource from the standard
@@ -63,7 +67,22 @@ the remit of the zenldap daemon. Change to the ZenPack's services directory and 
 "python LdapConfigService.py"; you can add a --device=<device name> to query for a specific
 device.
 
-The event /Status/LDAPMonitor is provided as an object of the ZenPack.
+The ZenPack provides new, unique events as part of the ZenPack:
+* /Status/LDAPMonitor
+  * /Status/LDAPMonitor/ResponseTime
+  * /Status/LDAPMonitor/Replication_CSN
+  * /Status/LDAPMonitor/Replication_Files
+
+The repllication events are NOT self-clearing.  To prevent self-clearing, each event
+has the following transform to chenge the clearing fingerprint and set severity to Info:
+
+# Need to prevent automatic clearing mechanism for these events
+# Auto-clearing based on device, component and event class
+if evt.severity == 0:                      # Good news, clearing event
+  evt.component = evt.component + 'GoodNews'
+    evt.severity = 2
+
+
 
 A sample LDAP Protocol monitoring template is provided called 
 LDAPMonitor (the standard template provided with ZenPacks.zenoss.LDAPMonitor is
@@ -72,7 +91,15 @@ a cn=monitor LDAP query.  The ldapRelCheck datasource is a command datasource th
 runs the ldap_rel_check.py script in the ZenPack's libexec directory, to
 determine whether replication is working.
 
+Two further COMMAND datasources are included in the LDAPMonitor template, one to
+check replication by comparing the CSN, the second compares the complete subtree
+specified by the zLDAPRepContext zProperty.  Both are driven by scripts under the
+ZenPack's libexec directory.
 
+* ldap_rel_check.py
+  * Uses the /usr/bin/ldapsearch command to get the context CSN
+* ldap_rel_check_files_pythonldap.py
+  * Uses the python ldap library to gather the full subtrees from master and slave(s)
 
 
 General Comments
@@ -91,7 +118,7 @@ ZenPack installation
 This ZenPack can be installed from the .egg file using either the GUI or the
 zenpack command line. 
 
-zenpack --install ZenPacks.skills1st.LDAPMonitoring-1.0.0-py2.7.egg
+zenpack --install ZenPacks.skills1st.LDAPMonitoring-1.0.1-py2.7.egg
 
 Alternatively, download the tar bundle from github and
 install in development mode.
@@ -106,13 +133,15 @@ Change History
 ==============
 * 1.0
    * Initial Release
+* 1.0.1
+   * ldap_rel_check_files_pythonldap.py to check full replication
 
 Screenshots
 ===========
 
 .. External References Below. Nothing Below This Line Should Be Rendered
 
-.. _Latest Package for Python 2.7: https://github.com/jcurry/ZenPacks.skills1st.LDAPMonitoring/blob/master/dist/ZenPacks.skills1st.LDAPMonitoring-1.0.0-py2.7.egg?raw=true
+.. _Latest Package for Python 2.7: https://github.com/jcurry/ZenPacks.skills1st.LDAPMonitoring/blob/master/dist/ZenPacks.skills1st.LDAPMonitoring-1.0.1-py2.7.egg?raw=true
 
 
 
