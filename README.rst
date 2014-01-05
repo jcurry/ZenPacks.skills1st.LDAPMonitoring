@@ -68,16 +68,20 @@ the remit of the zenldap daemon. Change to the ZenPack's services directory and 
 device.
 
 The ZenPack provides new, unique events as part of the ZenPack:
+
 * /Status/LDAPMonitor
-  * /Status/LDAPMonitor/ResponseTime
-  * /Status/LDAPMonitor/Replication_CSN
-  * /Status/LDAPMonitor/Replication_Files
+   * /Status/LDAPMonitor/ResponseTime
+   * /Status/LDAPMonitor/Replication_CSN
+   * /Status/LDAPMonitor/Replication_Files
 
 The repllication events are NOT self-clearing.  To prevent self-clearing, each event
 has the following transform to chenge the clearing fingerprint and set severity to Info:
 
+
 # Need to prevent automatic clearing mechanism for these events
+
 # Auto-clearing based on device, component and event class
+
 if evt.severity == 0:                      # Good news, clearing event
   evt.component = evt.component + 'GoodNews'
     evt.severity = 2
@@ -97,9 +101,9 @@ specified by the zLDAPRepContext zProperty.  Both are driven by scripts under th
 ZenPack's libexec directory.
 
 * ldap_rel_check.py
-  * Uses the /usr/bin/ldapsearch command to get the context CSN
+   * Uses the /usr/bin/ldapsearch command to get the context CSN
 * ldap_rel_check_files_pythonldap.py
-  * Uses the python ldap library to gather the full subtrees from master and slave(s)
+   * Uses the python ldap library to gather the full subtrees from master and slave(s)
 
 
 General Comments
