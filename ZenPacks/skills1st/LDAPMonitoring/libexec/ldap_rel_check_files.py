@@ -10,6 +10,8 @@
 #                       -N ${device/zLDAPDN} 
 #                       -W ${device/zLDAPPW} 
 #                       -P ${device/zLDAPProto} 
+#                       -T ${device/zLDAPPort} 
+#                       -R ${device/zLDAPRepContext} 
 #                       -D ${device/id} 
 #                       -S ${device/zLDAPSlaves}
 #   eg. /usr/bin/ldapsearch -x  -LLL -D ${device/zLDAPDN}  -w ${device/zLDAPPW} -H ${device/zLDAPProto}://${device/id}/  -b 'cn=monitor' -s sub '*' '+'
@@ -38,18 +40,28 @@ def get_cli_options():
 
     parser.add_option(
         '-N', '--dn',
-        dest='dn', default='""',
+        dest='dn', default='',
         help='Distinguished Name')
 
     parser.add_option(
         '-W', '--pwd',
-        dest='pwd', default='""',
+        dest='pwd', default='',
         help='Password for DN')
 
     parser.add_option(
         '-P', '--proto',
         dest='proto', default='ldap',
         help='LDAP protocol (ldap or ldaps)')
+
+    parser.add_option(
+        '-T', '--port',
+        dest='port', default='389',
+        help='LDAP Port - default is 389')
+
+    parser.add_option(
+        '-R', '--rep',
+        dest='rep', default='dc=example,dc=org',
+        help='LDAP replication Context string')
 
     parser.add_option(
         '-S', '--slaves',
@@ -67,24 +79,16 @@ def main():
         print 'Incorrect parameters supplied, please use --help for usage'
         return
     dn = options.dn
-    if not options.dn:
-        dn = '""'
     pwd = options.pwd
-    if not options.pwd:
-        pwd = '""'
     device = options.device
+    rep = options.rep
+
     #print 'DN is %s pwd is %s proto is %s device is %s slaves is %s' % ( dn, pwd, options.proto, device, options.slaves)
 
-    url=options.proto +  '://' + device
+    url=options.proto +  '://' + device + ':' + options.port
     #print ' dn is %s and pwd is %s \n' % (dn,pwd)
-    # Blank strings actually come through as "" - need to make them really the null string
-    if dn == '""':
-        dn = ''
-    if pwd == '""':
-        pwd=''
     
-    cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "dc=mserv,dc=local", "-S", "dn", "-s",  "sub", "*", "+" ]
-    #cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "cn=monitor", "-S",  "dn" ]
+    cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", rep, "-S",  "dn", "-s",  "sub", "*", "+" ]
 
     # Create output  file for master
     masterFile='/tmp/' + device + '_ldapMaster.out'
@@ -103,8 +107,7 @@ def main():
 
         for s in eval(options.slaves):
             url=options.proto +  '://' + s
-            cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "dc=mserv,dc=local", "-S", "dn", "-s",  "sub", "*", "+" ]
-            #cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", "cn=monitor", "-S",  "dn"]
+            cmd = ["/usr/bin/ldapsearch", "-x", "-o", "nettimeout=10", "-LLL", "-D", dn, "-w", pwd, "-H", url, "-b", rep, "-S",  "dn", "-s",  "sub", "*", "+" ]
             slaveFile = '/tmp/' + s + '_ldapSlave.out'
             slave_out = open(slaveFile, 'w')
             #print 'cmd is %s ' % (cmd)
@@ -127,7 +130,7 @@ def main():
                 sys.exit(STATE_WARNING)
 
             for m, sl in zip(master_out, slave_out):
-                if m != sl:
+                if m.strip() != sl.strip():
                     try:
                         master_out.close()
                         slave_out.close()
