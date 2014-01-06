@@ -19,6 +19,7 @@ import ldap
 from optparse import OptionParser
 import sys
 
+
 # Nagios return codes
 STATE_OK = 0
 STATE_WARNING = 1
@@ -119,8 +120,9 @@ def main():
         # If slaves exists it will arrive as a string representing a list of strings
         #  eg. "['s1', 's2']"
 
-        for s in eval(options.slaves):
-            url=options.proto +  '://' + s + ':' + options.port
+        for slave in eval(options.slaves):
+            #print 'slave is %s \n ' % (slave)
+            url=options.proto +  '://' + slave + ':' + options.port
             slaveResultseq = getLdap(url, credentials, rep)
 
             #print 'slaveResultseq is %s \n' % (slaveResultseq)
@@ -129,10 +131,11 @@ def main():
                 sys.exit(STATE_WARNING)
 
             if len(masterResultseq) != len(slaveResultseq):
-                print 'LDAP content of  %s is different to %s - different length' % (device, s)
+                print 'LDAP content of  %s is different from %s - different number of entries' % (device, slave)
                 sys.exit(STATE_WARNING)
 
-            slaveResultseqSort = sorted(s)
+            slaveResultseqSort = sorted(slaveResultseq)
+            #print 'slaveResultseqSort is %s \n' % (slaveResultseqSort)
             # Check all entries match
             for m, s in zip(masterResultseqSort, slaveResultseqSort):
                 #print 'm is %s and s is %s \n' % (m, s)
@@ -163,7 +166,7 @@ def main():
                     sys.exit(STATE_WARNING)
 
             # If we get here then all entries for all dn's match
-            print 'Master and slave files are identical - for slaveResultseq %s \n' % (slaveResultseqSort)
+            print 'Master and slave files are identical - for slave %s \n' % (slave)
         sys.exit(STATE_OK)
 
 
