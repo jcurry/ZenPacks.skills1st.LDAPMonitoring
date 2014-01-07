@@ -115,7 +115,7 @@ def main():
                 print 'LDAP replication broken between  %s and %s - contextCSNs are different ' % (device, s)
                 sys.exit(STATE_WARNING)
             else:
-                print 'Slave %s CSN same as  master %s. CSN is %s.  ' % (s, device, masterCSN)
+                print 'Slave %s CSN same as  master %s.  %s.  ' % (s, device, masterCSN[1])
                 sys.exit(STATE_OK)
 
 
