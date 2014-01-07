@@ -11,7 +11,9 @@ ZenPacks.  This offering is completely standalone but has adapted the core
 monitoring from Alan's ZenPack.
 
 It provides a new Zenoss daemon, zenldap, which gathers LDAP data.
-it uses zProperties introduced by the ZenPack to authenticate to an LDAP server.
+It uses zProperties introduced by the ZenPack to authenticate to an LDAP server.
+It check LDAP replication by checking contextCSN records and by comparing full
+LDAP subtree searches.
 
 Requirements & Dependencies
 ===========================
@@ -40,20 +42,23 @@ The ZenPack introduces new zProperties through the __init__.py in the base direc
 These properties are all unique; they are not the same as those shipped with the
 ZenPacks.zenoss.LDAPMonitor ZenPack.
 
-zLDAPSlaves is used to denote slaves of an LDAP master.  It is used to check that
-the contextCSN is the same between master and slaves, as a replication check.  The 
-LDAP parameters for master and slaves MUST be the same.
+zLDAPSlaves is used to denote slaves of an LDAP master (it is a Python list).  
+It is used to perform replication checks between master and slave(s). 
+The LDAP parameters for master and slaves MUST be the same.
 
 zLDAPRepContext is used to specify parameters for a full check of the replication
 between master and slave(s).
 
 A new LDAP datasource called "Ldap Protocol" is introduced.  It utilises the new
 zProperties and runs an LDAP query with "cn=monitor".  The datasource from the standard
-ZenPacks.zenoss.LDAPMonitor has a type of LDAPMonitor.
+ZenPacks.zenoss.LDAPMonitor has a type of LDAPMonitor. The datasource has a large
+number of datapoints associated with it which are defined in the config.py file in 
+the ZenPack's base directory.
 
 A new Zenoss daemon, zenldap, is provided to gather LDAP information using the
-"Ldap Protocol" data source type.  It uses monparsers.py to parse the LDAP data into
-data points.  monparsers uses configuration data from config.py in the base directory. 
+"Ldap Protocol" data source type.  It uses monparsers.py in the ZenPack base directory, 
+to parse the LDAP data into data points.  monparsers.py uses configuration data 
+from config.py in the base directory. 
 
 The damon runs every 5 minutes by default.
 zenldap uses the Python ldap modules to communicate with LDAP devices - python ldap
@@ -75,7 +80,7 @@ The ZenPack provides new, unique events as part of the ZenPack:
    * /Status/LDAPMonitor/Replication_Files
 
 The repllication events are NOT self-clearing.  To prevent self-clearing, each event
-has the following transform to chenge the clearing fingerprint and set severity to Info:
+has the following transform to change the clearing fingerprint and set severity to Info:
 
 
 # Need to prevent automatic clearing mechanism for these events
@@ -90,13 +95,11 @@ if evt.severity == 0:                      # Good news, clearing event
 
 A sample LDAP Protocol monitoring template is provided called 
 LDAPMonitor (the standard template provided with ZenPacks.zenoss.LDAPMonitor is
-called LDAPServer). The BasicLdap datasource gathers about 30 attributes using
-a cn=monitor LDAP query.  The ldapRelCheck datasource is a command datasource that
-runs the ldap_rel_check.py script in the ZenPack's libexec directory, to
-determine whether replication is working.
+called LDAPServer). The BasicLdap datasource gathers the MONITORABLE datapoints defined in config.py,  
+using a cn=monitor LDAP query.  
 
 Two further COMMAND datasources are included in the LDAPMonitor template, one to
-check replication by comparing the CSN, the second compares the complete subtree
+check replication by comparing the CSN; the second compares the complete subtree
 specified by the zLDAPRepContext zProperty.  Both are driven by scripts under the
 ZenPack's libexec directory.
 

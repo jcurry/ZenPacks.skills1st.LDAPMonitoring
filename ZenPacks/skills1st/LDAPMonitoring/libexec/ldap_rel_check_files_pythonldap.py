@@ -150,7 +150,8 @@ def main():
                             else:
                                 if sorted(mv) != sorted(sv):        # key, value dont match
                                 #if mv != sv:        # key, value dont match - this proves that the sorted works
-                                    print 'key %s  master value %s slave value %s pairs dont match \n' % (mk, mv, sv)
+                                    #print 'key %s  master value %s slave value %s pairs dont match \n' % (mk, mv, sv)
+                                    print 'Data values dont match for master %s and slave %s \n' % (device, slave)
                                     sys.exit(STATE_WARNING)
                                 else:
                                     entryMatch = True
