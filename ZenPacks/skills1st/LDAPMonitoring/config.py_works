@@ -40,8 +40,6 @@ MONITORABLE =  (
                ('connectionscurrent', 'GAUGE'),
                ('bytes', 'DERIVE'),
                ('entries', 'DERIVE'),
-               ('pdus', 'DERIVE'),
-               ('referrals', 'DERIVE'),
                ('bindopsInitiated', 'DERIVE'),
                ('bindopsCompleted', 'DERIVE'),
                ('unbindopsInitiated', 'DERIVE'),
@@ -94,8 +92,6 @@ OPSDP = (
          ('connectionscurrent', 'Current Connections'),
          ('bytes', 'Bytes'),
          ('entries', 'Entries'),
-         ('pdus', 'PDUs'),
-         ('referrals', 'Referrals'),
          )
 
 

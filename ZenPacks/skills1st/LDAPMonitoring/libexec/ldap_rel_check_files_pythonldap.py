@@ -73,28 +73,33 @@ def get_cli_options():
 def getLdap(url, credentials, rep):
     ''' Use Python ldap library to initialise and bind to LDAP server and to get data'''
 
+    getLdapMsg = ''
     resultseq=[]
     slapd = ldap.initialize(url)
     try:
         slapd.simple_bind_s(*credentials)
     except ldap.INVALID_CREDENTIALS:
-        print  'Authentication failure: %s/%s: check credentials!' % (url, credentials[0])
+        #print  'Authentication failure: %s/%s: check credentials!' % (url, credentials[0])
+        print  'Authentication failure: check credentials!' 
     except ldap.SERVER_DOWN:
-        print  'LDAP server uncontactable when performing replication file checks '
+        getLdapMsg =   'LDAP server uncontactable when performing replication file checks '
     except ldap.LDAPError, e:
-        print  'LDAP server request failed when performing bind for replication file checks. error code is %s ' % (e)
+        #print  'LDAP server request failed when performing bind for replication file checks. error code is %s ' % (e)
+        getLdapMsg =   'LDAP server request failed when performing bind for replication file checks.'
 
     try:
         # Use synchronous search method with 30s timeout
         resultseq = slapd.search_st(rep, ldap.SCOPE_SUBTREE, attrlist=['*', '+'], timeout=30)
         #resultseq = slapd.search_st(rep, ldap.SCOPE_BASE, attrlist=['*', '+'], timeout=30)
     except ldap.TIMEOUT:
-        print  'LDAP search failure - timeout requesting %s from %s ' % (rep, url)
+        #print  'LDAP search failure - timeout requesting %s from %s ' % (rep, url)
+        getLdapMsg =   'LDAP search failure - timeout'
     except Exception, e:
-        print  'LDAP search failure requesting %s from %s error code is %s' % (rep, url, e)
+        #print  'LDAP search failure requesting %s from %s error code is %s' % (rep, url, e)
+        getLdapMsg =   'LDAP general search failure'
 
     slapd.unbind()
-    return resultseq
+    return resultseq, getLdapMsg
 
 def main():
     options = get_cli_options()
@@ -108,14 +113,17 @@ def main():
     url=options.proto +  '://' + device + ':' + options.port
 
 
-    masterResultseq = getLdap(url, credentials, rep)
+    #masterResultseq = getLdap(url, credentials, rep)
+    masterResultseq, getLdapMsg = getLdap(url, credentials, rep)
 
     #print 'masterResultseq is %s \n' % (masterResultseq)
     if not masterResultseq:
+        print ' Problem accessing LDAP master - %s \n' % (getLdapMsg)
         sys.exit(STATE_WARNING)
     masterResultseqSort = sorted(masterResultseq)
     
     # Now check slaves and compare with master file
+    badSlaveFlag = {}
     if options.slaves != '[]':
         # If slaves exists it will arrive as a string representing a list of strings
         #  eg. "['s1', 's2']"
@@ -123,52 +131,78 @@ def main():
         for slave in eval(options.slaves):
             #print 'slave is %s \n ' % (slave)
             url=options.proto +  '://' + slave + ':' + options.port
-            slaveResultseq = getLdap(url, credentials, rep)
+            slaveResultseq, getLdapMsg = getLdap(url, credentials, rep)
 
             #print 'slaveResultseq is %s \n' % (slaveResultseq)
 
             if not slaveResultseq:
-                sys.exit(STATE_WARNING)
+                badSlaveFlag[slave] =  "No data from Slave"
+                continue
+                #sys.exit(STATE_WARNING)
 
-            if len(masterResultseq) != len(slaveResultseq):
-                print 'LDAP content of  %s is different from %s - different number of entries' % (device, slave)
-                sys.exit(STATE_WARNING)
+            #if len(masterResultseq) != len(slaveResultseq):
+            elif len(masterResultseq) != len(slaveResultseq):
+                #print 'LDAP content of  %s is different from %s - different number of entries' % (device, slave)
+                badSlaveFlag[slave] =  "Slave has different number of entries"
+                continue
+                #sys.exit(STATE_WARNING)
 
-            slaveResultseqSort = sorted(slaveResultseq)
-            #print 'slaveResultseqSort is %s \n' % (slaveResultseqSort)
-            # Check all entries match
-            for m, s in zip(masterResultseqSort, slaveResultseqSort):
-                #print 'm is %s and s is %s \n' % (m, s)
-                #print 'm0 is %s and s0 is %s \n' % (m[0], s[0])
-                #print 'm1 is %s and s1 is %s \n' % (m[1], s[1])
-                if m[0] == s[0]:        # dn keys are the same
-                    for mk, mv in m[1].iteritems():               #get key, value
-                        entryMatch = False
-                        for sk, sv in s[1].iteritems():
-                            if mk != sk:            # different keys
-                                continue
-                            else:
-                                if sorted(mv) != sorted(sv):        # key, value dont match
-                                #if mv != sv:        # key, value dont match - this proves that the sorted works
-                                    #print 'key %s  master value %s slave value %s pairs dont match \n' % (mk, mv, sv)
-                                    print 'Data values dont match for master %s and slave %s \n' % (device, slave)
-                                    sys.exit(STATE_WARNING)
+            else:
+                slaveResultseqSort = sorted(slaveResultseq)
+                #print 'slaveResultseqSort is %s \n' % (slaveResultseqSort)
+                # Check all entries match
+                for m, s in zip(masterResultseqSort, slaveResultseqSort):
+                    #print 'm is %s and s is %s \n' % (m, s)
+                    #print 'm0 is %s and s0 is %s \n' % (m[0], s[0])
+                    #print 'm1 is %s and s1 is %s \n' % (m[1], s[1])
+                    if m[0] == s[0]:        # dn keys are the same
+                        for mk, mv in m[1].iteritems():               #get key, value
+                            entryMatch = False
+                            for sk, sv in s[1].iteritems():
+                                if mk != sk:            # different keys
+                                    continue
                                 else:
-                                    entryMatch = True
+                                    if sorted(mv) != sorted(sv):        # key, value dont match
+                                    #if mv != sv:        # key, value dont match - this proves that the sorted works
+                                        #print 'key %s  master value %s slave value %s pairs dont match \n' % (mk, mv, sv)
+                                        #print 'Data values dont match for master %s and slave %s \n' % (device, slave)
+                                        badSlaveFlag[slave] =  "Data values dont match"
+                                        break
+                                        #sys.exit(STATE_WARNING)
+                                    else:
+                                        entryMatch = True
+                                        break
+                            #if not entryMatch:
+                            if not entryMatch:
+                                if not (slave in badSlaveFlag):
+                                    #print 'No slave key matching master key %s \n' % (mk)
+                                    badSlaveFlag[slave] =  "Key not found in slave"
                                     break
-                        if not entryMatch:
-                            print 'No slave key matching master key %s \n' % (mk)
-                            sys.exit(STATE_WARNING)
+                                    #sys.exit(STATE_WARNING)
+                                else:
+                                    break               # get out of for mk, mv in m[1].iteritems():
 
-                    # If we get here then we have successfully checked all key,value dictionary entries for this dn 
-                # dn keys not the same - must be a non-match
-                else:
-                    print 'dn keys dont match for master %s and slave %s \n' % (m[0], s[0])
-                    sys.exit(STATE_WARNING)
+                        # If we get here then we have successfully checked all key,value dictionary entries for this dn 
+                    # dn keys not the same - must be a non-match
+                    else:
+                        #print 'dn keys dont match for master %s and slave %s \n' % (m[0], s[0])
+                        badSlaveFlag[slave] =  "Keys dont match"
+                        break
+                        #sys.exit(STATE_WARNING)
 
-            # If we get here then all entries for all dn's match
-            print 'Master and slave files are identical - for slave %s \n' % (slave)
-        sys.exit(STATE_OK)
+                # If we get here then all entries for all dn's for this slave, match
+                # If we get here and badSlaveFlag[slave] doesnt exist, then all entries for all dn's for this slave, match
+                #print 'Master and slave files are identical - for slave %s \n' % (slave)
+
+        if not badSlaveFlag:
+            print 'Master and all slave files are identical  \n'
+            sys.exit(STATE_OK)
+        else:
+            msg = ''
+            for k,v in badSlaveFlag.iteritems():
+                msg = msg + 'Problem with slave ' + k + ' - ' + v + '  '
+            print '%s \n' % (msg)
+            sys.exit(STATE_WARNING)
 
 
 # if we're being called as a stand-alone script. Not imported.
