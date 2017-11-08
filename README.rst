@@ -12,16 +12,20 @@ monitoring from Alan's ZenPack.
 
 It provides a new Zenoss daemon, zenldap, which gathers LDAP data.
 It uses zProperties introduced by the ZenPack to authenticate to an LDAP server.
-It check LDAP replication by checking contextCSN records and by comparing full
+It checks LDAP replication by checking contextCSN records and by comparing full
 LDAP subtree searches.
 
 Requirements & Dependencies
 ===========================
 
-    * Zenoss Versions Supported: 4.x
-    * External Dependencies: Acces to LDAP devices must be available for monitoring
-    * ZenPack Dependencies: Python ldap
-      (check whether there is an ldap directory under $PYTHONPATH)
+    * Zenoss Versions Supported: 
+        * 4.x - tested on Zenoss 4.2.5 with SUP 671
+        * 5.x - tested on Zenoss 5.0.6 and 5.2.1
+    * External Dependencies: 
+        * Devices must be accessible using the LDAP protocol
+        * python-ldap package
+        * LDAP replication checks use the ldapsearch command from the openldap-clients package
+    * ZenPack Dependencies:
     * Installation Notes: Restart zenoss entirely after installation
     * Configuration:
 
@@ -72,6 +76,9 @@ the remit of the zenldap daemon. Change to the ZenPack's services directory and 
 "python LdapConfigService.py"; you can add a --device=<device name> to query for a specific
 device.
 
+If installed on a Zenoss 5.x, connect to the zenhub container to run the LdapConfigService
+utility.
+
 The ZenPack provides new, unique events as part of the ZenPack:
 
 * /Status/LDAPMonitor
@@ -109,8 +116,6 @@ ZenPack's libexec directory.
    * Uses the python ldap library to gather the full subtrees from master and slave(s)
 
 
-General Comments
-----------------
 
 Download
 ========
@@ -122,10 +127,22 @@ below.
 ZenPack installation
 ======================
 
+Prerequisites installation
+--------------------------
+
+The ZenPack relies on having the openldap packages and python-ldap; use yum ( as root) to
+install::
+
+     yum install openldap openldap-clients python-ldap
+
+
+Zenoss 4.x installation
+-----------------------
+
 This ZenPack can be installed from the .egg file using either the GUI or the
 zenpack command line. 
 
-zenpack --install ZenPacks.skills1st.LDAPMonitoring-1.0.1-py2.7.egg
+zenpack --install ZenPacks.skills1st.LDAPMonitoring-1.0.3-py2.7.egg
 
 Alternatively, download the tar bundle from github and
 install in development mode.
@@ -134,6 +151,29 @@ zenpack --link --install ZenPacks.skills1st.LDAPMonitoring
 
 Restart zenoss completely after installation.
 
+Zenoss 5.x installation
+-----------------------
+
+The openldap packages need to be installed so that they persist when containers are
+stopped and started. As the root user on the base Zenoss server::
+
+    serviced service shell -i -s preLdap zope bash
+    yum install openldap openldap-clients python-ldap
+    exit
+    serviced snapshot commit preLdap
+    serviced service restart Zenoss.core
+
+The packages should then be available to all containers.
+
+To install the egg version of the ZenPack, download the file to a directory on the
+base Zenoss server that has world access for read/write/execute.  Ensure that the egg
+file has similar permissions.  Change to that directory and run::
+
+    serviced service run zope zenpack-manager install ZenPacks.skills1st.LDAPMonitoring-1.0.3-py2.7.egg
+    serviced service restart Zenoss.core
+
+The zenldap daemon should be packaged in a Docker container and installed as a child service of the
+current instance of Zenoss Core.
 
 
 Change History
@@ -142,13 +182,15 @@ Change History
    * Initial Release
 * 1.0.1
    * ldap_rel_check_files_pythonldap.py to check full replication
+* 1.0.2
+   * Minor tweaks and checks for Zenoss 5.x
 
 Screenshots
 ===========
 
 .. External References Below. Nothing Below This Line Should Be Rendered
 
-.. _Latest Package for Python 2.7: https://github.com/jcurry/ZenPacks.skills1st.LDAPMonitoring/blob/master/dist/ZenPacks.skills1st.LDAPMonitoring-1.0.1-py2.7.egg?raw=true
+.. _Latest Package for Python 2.7: https://github.com/jcurry/ZenPacks.skills1st.LDAPMonitoring/blob/master/dist/ZenPacks.skills1st.LDAPMonitoring-1.0.2-py2.7.egg?raw=true
 
 
 

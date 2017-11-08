@@ -1,4 +1,5 @@
 MANIFEST.in
+README.rst
 README.txt
 setup.py
 ZenPacks/__init__.py
@@ -36,13 +37,13 @@ ZenPacks/skills1st/LDAPMonitoring/libexec/compare.py
 ZenPacks/skills1st/LDAPMonitoring/libexec/ldap_rel_check.py
 ZenPacks/skills1st/LDAPMonitoring/libexec/ldap_rel_check_files.py
 ZenPacks/skills1st/LDAPMonitoring/libexec/ldap_rel_check_files_pythonldap.py
+ZenPacks/skills1st/LDAPMonitoring/libexec/ldap_rel_check_files_pythonldap_20140121.py
 ZenPacks/skills1st/LDAPMonitoring/migrate/ExampleMigration.py
 ZenPacks/skills1st/LDAPMonitoring/migrate/ExampleMigration.pyc
 ZenPacks/skills1st/LDAPMonitoring/migrate/__init__.py
-ZenPacks/skills1st/LDAPMonitoring/modeler/__init__.py
-ZenPacks/skills1st/LDAPMonitoring/modeler/plugins/__init__.py
 ZenPacks/skills1st/LDAPMonitoring/objects/objects.xml
 ZenPacks/skills1st/LDAPMonitoring/objects/objects.xml_20131217
+ZenPacks/skills1st/LDAPMonitoring/objects/templates/Devices_Server_rrdTemplates_LDAPMonitor.xml
 ZenPacks/skills1st/LDAPMonitoring/reports/Example_Reports/Example_Report.rpt.example
 ZenPacks/skills1st/LDAPMonitoring/reports/plugins/example_plugin.py
 ZenPacks/skills1st/LDAPMonitoring/services/LdapConfigService.py
