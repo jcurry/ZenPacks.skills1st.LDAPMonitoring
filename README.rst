@@ -142,7 +142,7 @@ Zenoss 4.x installation
 This ZenPack can be installed from the .egg file using either the GUI or the
 zenpack command line. 
 
-zenpack --install ZenPacks.skills1st.LDAPMonitoring-1.0.3-py2.7.egg
+zenpack --install ZenPacks.skills1st.LDAPMonitoring-1.0.2-py2.7.egg
 
 Alternatively, download the tar bundle from github and
 install in development mode.
@@ -169,7 +169,7 @@ To install the egg version of the ZenPack, download the file to a directory on t
 base Zenoss server that has world access for read/write/execute.  Ensure that the egg
 file has similar permissions.  Change to that directory and run::
 
-    serviced service run zope zenpack-manager install ZenPacks.skills1st.LDAPMonitoring-1.0.3-py2.7.egg
+    serviced service run zope zenpack-manager install ZenPacks.skills1st.LDAPMonitoring-1.0.2-py2.7.egg
     serviced service restart Zenoss.core
 
 The zenldap daemon should be packaged in a Docker container and installed as a child service of the
